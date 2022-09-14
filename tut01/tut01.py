@@ -5,7 +5,7 @@ import pandas as pd #importing pandas
 import math #importing math
 def octact_identification(mod=5000):
    #code to read input csv file and store that in dataframe
-    df=pd.read_csv(r'C:\Users\DELL\Documents\GitHub\2001CE55_2022\tut01\octant_input.csv') 
+    df=pd.read_csv('octant_input.csv') 
 
     #takingh mean of each 'U','V','W' column
     df1=df["U"].mean()
@@ -152,8 +152,8 @@ def octact_identification(mod=5000):
     
 
 
-    print (df.head(10))
-    df.to_csv('C:\Users\DELL\Documents\GitHub\2001CE55_2022\tut01\octant_output.csv',index=False)
+    
+    df.to_csv('octant_output.csv',index=False)
     
 mod=5000
 octact_identification(mod)
