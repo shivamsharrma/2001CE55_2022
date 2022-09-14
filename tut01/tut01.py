@@ -1,7 +1,7 @@
 
 import csv
 from sqlite3 import Time
-import pandas as pd 
+import pandas as pd #importing pandas
 import math
 def octact_identification(mod=5000):
    
@@ -69,19 +69,6 @@ def octact_identification(mod=5000):
     df.loc[1," "]="user input"
     df["Octant ID"]=''
     df.loc[0,"Octant ID"]="Overall Count"
-
-    df.loc[1,"Octant ID"]="mod {}".format(mod)
-    n=math.ceil(len(df)/mod)
-    
-    i=0
-    while i<n:
-        l=i*mod
-        u=((i+1)*mod)-1
-        if u>len(df):
-            u=len(df)-1
-        df.loc[i+2,"Octant ID"]="{}-{}".format(l,u)
-        i+=1
-    
     df["1"]=''
     df.loc[0,"1"]=count1
     df["-1"]=''
@@ -98,12 +85,61 @@ def octact_identification(mod=5000):
     df.loc[0,"4"]=count4
     df["-4"]=''
     df.loc[0,"-4"]=count8
+
+    df.loc[1,"Octant ID"]="mod {}".format(mod)
+    n=math.ceil(len(df)/mod)
+    
+    i=0
+    while i<n:
+        l=i*mod
+        u=((i+1)*mod)-1
+        if u>len(df):
+            u=len(df)-1
+        df.loc[i+2,"Octant ID"]="{}-{}".format(l,u)
+        j=l
+        c1=0
+        c2=0
+        c3=0
+        c4=0
+        c5=0
+        c6=0
+        c7=0
+        c8=0
+        while j<=u:
+            if df.loc[j,"octant"]==1:
+                c1+=1
+            elif df.loc[j,"octant"]==2:
+                c2+=1
+            elif df.loc[j,"octant"]==3:
+                c3+=1
+            elif df.loc[j,"octant"]==4:
+                c4+=1
+            elif df.loc[j,"octant"]==-1:
+                c5+=1
+            elif df.loc[j,"octant"]==-2:
+                c6+=1
+            elif df.loc[j,"octant"]==-3:
+                c7+=1
+            elif df.loc[j,"octant"]==-4:
+                c8+=1
+            j+=1
+        df.loc[i+2,"1"]=c1
+        df.loc[i+2,"-1"]=c5
+        df.loc[i+2,"2"]=c2
+        df.loc[i+2,"-2"]=c6
+        df.loc[i+2,"3"]=c3
+        df.loc[i+2,"-3"]=c7
+        df.loc[i+2,"4"]=c4
+        df.loc[i+2,"-4"]=c8
+        i+=1
+    
+    
     
 
     
 
 
-    print (df["Octant ID"].head(10))
+    print (df.head(10))
     
 mod=5000
 octact_identification(mod)
