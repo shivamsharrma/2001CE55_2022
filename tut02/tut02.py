@@ -183,9 +183,10 @@ def octant_transition_count(mod=5000):
     for l in list1:
         for j in range (8):
             df.loc[j+i,str(l)]=0 #assigning 0 to each value of matrix
-    while k<len(df):
-        prev=df.loc[k-1,"Octant"]
-        curr=str(df.loc[k,"Octant"])
+    while k<len(df): #loop for counting the transition 
+        prev=df.loc[k-1,"Octant"] #storing the previous octant value
+        curr=str(df.loc[k,"Octant"]) ##storing the current octant value
+        #checking the transition values and increament the corresponding transition
         if prev==1:
             df.loc[i,curr]+=1
         elif prev==-1:
@@ -204,19 +205,20 @@ def octant_transition_count(mod=5000):
             df.loc[i+7,curr]+=1
         k+=1    
     i=i+11
-    c=0
+    c=0 #initiliazing the no. of interval from zero 
     while c<n:
         a=c*mod #lower value of interval
-        b=((c+1)*mod)
+        b=((c+1)*mod) #upper bound
         if b>len(df):
             b=len(df)-1
         df.loc[i,' ']="Mod Transition Count"
         i+=1
-        df.loc[i,' ']="{}-{}".format(a,b)
+        df.loc[i,' ']="{}-{}".format(a,b) #printing intervals
         df.loc[i,"1"]="To"
         i+=1
         df.loc[i,' ']="Count"
         df.loc[i+1,"  "]="From"
+        #Assigning octants in a row
         df.loc[i,"1"]=1
         df.loc[i,"-1"]=-1
         df.loc[i,"2"]=2
@@ -234,9 +236,8 @@ def octant_transition_count(mod=5000):
         df.loc[i+5,' ']=-3
         df.loc[i+6,' ']=4
         df.loc[i+7,' ']=-4
-         #maximum value of interval
         
-         #printing intervals
+         
         list1= [1,-1,2,-2,3,-3,4,-4]
         for l in list1:
             for j in range (8):
@@ -268,6 +269,6 @@ def octant_transition_count(mod=5000):
         c+=1
 
     print(df.head(40))
-    # df.to_excel('octant_output.xlsx',index=False)
+    # df.to_excel('output_octant_transition_identify.xlsx',index=False)
 mod=5000
 octant_transition_count(mod)
