@@ -14,7 +14,7 @@ def octant_transition_count(mod=5000):
 # 
 #     
 #creating dataframe as df
-    df =pd.read_excel(r'C:\Users\DELL\Documents\GitHub\2001CE55_2022\tut02\input_octant_transition_identify.xlsx')
+    df =pd.read_excel('input_octant_transition_identify.xlsx')
     try:
         df1=df["U"].mean()
         df2=df["V"].mean()
@@ -229,10 +229,10 @@ def octant_transition_count(mod=5000):
         a=c*mod #lower value of interval
         b=((c+1)*mod) #upper bound
         if b>len(df):
-            b=len(df)-1
+            b=len(df)
         df.loc[i,' ']="Mod Transition Count"
         i+=1
-        df.loc[i,' ']="{}-{}".format(a,b) #printing intervals
+        df.loc[i,' ']="{}-{}".format(a,b-1) #printing intervals
         df.loc[i,"1"]="To"
         i+=1
         df.loc[i,' ']="Count"
@@ -262,33 +262,35 @@ def octant_transition_count(mod=5000):
         for l in list1:
             for j in range (8):
                 df.loc[j+i,str(l)]=0
-        j=a+1
-        try:
-            while j<=b: #loop for calculating transition for each interval (a-b)
-                prev=df.loc[j-1,"Octant"] #previous value of octant 
-                curr=str(df.loc[j,"Octant"]) #current value of octant
+        j=a
+        if b==len(df):
+            b=b-1
+        while j<b: #loop for calculating transition for each interval (a-b)
+            prev=df.loc[j,"Octant"] #previous value of octant 
+            curr=str(df.loc[j+1,"Octant"]) #current value of octant
 
-                #now checking the condition how the transition goes
-                if prev==1:
-                    df.loc[i,curr]+=1
-                elif prev==-1:
-                    df.loc[i+1,curr]+=1
-                elif prev==2:
-                    df.loc[i+2,curr]+=1
-                elif prev==-2:
-                    df.loc[i+3,curr]+=1
-                elif prev==3:
-                    df.loc[i+4,curr]+=1
-                elif prev==-3:
-                    df.loc[i+5,curr]+=1
-                elif prev==4:
-                    df.loc[i+6,curr]+=1
-                elif prev==-4:
-                    df.loc[i+7,curr]+=1
-                j+=1    
-            i=i+11
-        except:
-            print("there is error in printing transition count in interval")
+            #now checking the condition how the transition goes
+            if prev==1:
+                df.loc[i,curr]+=1
+            elif prev==-1:
+                df.loc[i+1,curr]+=1
+            elif prev==2:
+                df.loc[i+2,curr]+=1
+            elif prev==-2:
+                df.loc[i+3,curr]+=1
+            elif prev==3:
+                df.loc[i+4,curr]+=1
+            elif prev==-3:
+                df.loc[i+5,curr]+=1
+            elif prev==4:
+                df.loc[i+6,curr]+=1
+            elif prev==-4:
+                df.loc[i+7,curr]+=1
+            j+=1    
+        i=i+11
+            
+        
+            
         c+=1
 
     df.to_excel('output_octant_transition_identify.xlsx',index=False) #printing output in excel file
