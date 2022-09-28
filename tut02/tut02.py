@@ -8,10 +8,10 @@ def octant_transition_count(mod=5000):
 # from platform import python_version
 # ver = python_version()
 
-# if ver == "3.8.10":
-#     print("Correct Version Installed")
-# else:
-#     print("Please install 3.8.10. Instruction are present in the GitHub Repo/Webmail. Url: https://pastebin.com/nvibxmjw")
+# 
+# print("Correct Version Installed")
+# 
+#     
 #creating dataframe as df
     df =pd.read_excel(r'C:\Users\DELL\Documents\GitHub\2001CE55_2022\tut02\input_octant_transition_identify.xlsx')
     df1=df["U"].mean()
@@ -218,7 +218,7 @@ def octant_transition_count(mod=5000):
         i+=1
         df.loc[i,' ']="Count"
         df.loc[i+1,"  "]="From"
-        #Assigning octants in a row
+        #Assigning octants in a column of matrix
         df.loc[i,"1"]=1
         df.loc[i,"-1"]=-1
         df.loc[i,"2"]=2
@@ -228,6 +228,7 @@ def octant_transition_count(mod=5000):
         df.loc[i,"4"]=4
         df.loc[i,"-4"]=-4
         i+=1
+        #Assigning octants in a row of matrix
         df.loc[i,' ']=1
         df.loc[i+1,' ']=-1
         df.loc[i+2,' ']=2
@@ -237,17 +238,18 @@ def octant_transition_count(mod=5000):
         df.loc[i+6,' ']=4
         df.loc[i+7,' ']=-4
         
-         
+        
         list1= [1,-1,2,-2,3,-3,4,-4]
         for l in list1:
             for j in range (8):
                 df.loc[j+i,str(l)]=0
         j=a+1
-        while j<=b:
-            
-            
-            prev=df.loc[j-1,"Octant"]
-            curr=str(df.loc[j,"Octant"])
+
+        while j<=b: #loop for calculating transition for each interval (a-b)
+            prev=df.loc[j-1,"Octant"] #previous value of octant 
+            curr=str(df.loc[j,"Octant"]) #current value of octant
+
+            #now checking the condition how the transition goes
             if prev==1:
                 df.loc[i,curr]+=1
             elif prev==-1:
@@ -268,7 +270,6 @@ def octant_transition_count(mod=5000):
         i=i+11
         c+=1
 
-    print(df.head(40))
-    # df.to_excel('output_octant_transition_identify.xlsx',index=False)
+    df.to_excel('output_octant_transition_identify.xlsx',index=False) #printing output in excel file
 mod=5000
 octant_transition_count(mod)
