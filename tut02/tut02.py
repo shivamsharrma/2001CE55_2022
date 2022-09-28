@@ -1,4 +1,4 @@
-import pandas as pd
+import pandas as pd #importing pandas
 from openpyxl import load_workbook
 import math
 
@@ -12,6 +12,7 @@ def octant_transition_count(mod=5000):
 #     print("Correct Version Installed")
 # else:
 #     print("Please install 3.8.10. Instruction are present in the GitHub Repo/Webmail. Url: https://pastebin.com/nvibxmjw")
+#creating dataframe as df
     df =pd.read_excel(r'C:\Users\DELL\Documents\GitHub\2001CE55_2022\tut02\input_octant_transition_identify.xlsx')
     df1=df["U"].mean()
     df2=df["V"].mean()
@@ -77,8 +78,8 @@ def octant_transition_count(mod=5000):
             count8+=1
     
     df["Octant"]=oct #copying oct values to octant column
-    df[" "]="" #intiliazing a empty column
-    df.loc[1," "]="User Input" #asigning string to 1st row of empty column
+    df["  "]="" #intiliazing a empty column
+    df.loc[1,"  "]="User Input" #asigning string to 1st row of empty column
     df[' ']='' #creating octant id column
     df.loc[0,' ']="Overall Count" #printing "Overall Count" to 0th row of "Octant ID" column
     df["1"]=''
@@ -101,7 +102,7 @@ def octant_transition_count(mod=5000):
     df.loc[1,' ']="mod {}".format(mod) #printing mod value in 1st row of "Octant ID" column
     n=math.ceil(len(df)/mod) #calculating number of intervals
     
-    i=0
+    i=0 # i is the index which is traversing in row in excel file
     while i<n:
         a=i*mod #lower value of interval
         b=((i+1)*mod)-1 #maximum value of interval
@@ -150,9 +151,15 @@ def octant_transition_count(mod=5000):
         df.loc[i+2,"4"]=c4
         df.loc[i+2,"-4"]=c8
         i+=1
+    i+=2
+    #from here we will count transition count
     df.loc[i+2,' ']="Overall Transition Count"
     i+=3
     df.loc[i,' ']="Count"
+    df.loc[i+1,"  "]="From"
+
+    ## MAKING MATRIX FOR OVERALL COUNT
+    #Assigning octants in a row
     df.loc[i,"1"]=1
     df.loc[i,"-1"]=-1
     df.loc[i,"2"]=2
@@ -162,6 +169,7 @@ def octant_transition_count(mod=5000):
     df.loc[i,"4"]=4
     df.loc[i,"-4"]=-4
     i+=1
+    #defignign row of overall matrix
     df.loc[i,' ']=1
     df.loc[i+1,' ']=-1
     df.loc[i+2,' ']=2
@@ -170,11 +178,11 @@ def octant_transition_count(mod=5000):
     df.loc[i+5,' ']=-3
     df.loc[i+6,' ']=4
     df.loc[i+7,' ']=-4
-    k=1
+    k=1 #initializing the row from 1
     list1= [1,-1,2,-2,3,-3,4,-4]
     for l in list1:
         for j in range (8):
-            df.loc[j+i,str(l)]=0
+            df.loc[j+i,str(l)]=0 #assigning 0 to each value of matrix
     while k<len(df):
         prev=df.loc[k-1,"Octant"]
         curr=str(df.loc[k,"Octant"])
@@ -208,6 +216,7 @@ def octant_transition_count(mod=5000):
         df.loc[i,"1"]="To"
         i+=1
         df.loc[i,' ']="Count"
+        df.loc[i+1,"  "]="From"
         df.loc[i,"1"]=1
         df.loc[i,"-1"]=-1
         df.loc[i,"2"]=2
@@ -258,7 +267,7 @@ def octant_transition_count(mod=5000):
         i=i+11
         c+=1
 
-    # print(df.head(40))
-    df.to_excel('octant_output.xlsx',index=False)
+    print(df.head(40))
+    # df.to_excel('octant_output.xlsx',index=False)
 mod=5000
 octant_transition_count(mod)
