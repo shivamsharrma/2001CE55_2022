@@ -1,8 +1,5 @@
-#Help https://youtu.be/H37f_x4wAC0
 import pandas as pd
-import math
 def octant_longest_subsequence_count():
-
 ###Code
 
 # from platform import python_version
@@ -12,16 +9,16 @@ def octant_longest_subsequence_count():
 # print("Correct Version Installed")
 # 
 #     
-#creating dataframe as df
+#creating dataframe as df and reading the excel file
     df =pd.read_excel('input_octant_longest_subsequence.xlsx')
     try:
-        df1=df["U"].mean()
+        df1=df["U"].mean()#taking mean of each U,V,W column
         df2=df["V"].mean()
         df3=df["W"].mean()
     except:
         print("error getting while finding the mean\n")
 
-    #printing average values
+    #printing average values in their respective column
     df.loc[0,"U Avg"]=df1
     df.loc[0,"V Avg"]=df2
     df.loc[0,"W Avg"]=df3
@@ -88,76 +85,106 @@ def octant_longest_subsequence_count():
     df["Octant"]=oct #copying oct values to octant column
     df["  "]="" #intiliazing a empty column\
     list=[1,-1,2,-2,3,-3,4,-4]
-    df["Count"]=""
+    df["Count"]="" #creating the column count
     j=0
     while j<8:
-        df.loc[j,"Count"]=list[j]
+        df.loc[j,"Count"]=list[j] #printing all the values of list in count column
         j+=1
-    df["Longest subsequence length"]=""
-    df["count"]=" "
-    count1=0
-    count2=0
-    count3=0
-    count4=0
-    count5=0
-    count6=0
-    count7=0
-    count8=0
-    c1=c2=c3=c4=c5=c6=c7=c8=0
-    for i in range (len(df)-1):
-        a=df.loc[i,"Octant"]
-        b=df.loc[i+1,"Octant"]
-        if a==b:
-            if a==1:
-                c1+=1
-            elif a==-1:
-                c2+=1
-            elif a==2:
-                c3+=1
-            elif a==-2:
-                c4+=1
-            elif a==3:
-                c5+=1
-            elif a==-3:
-                c6+=1
-            elif a==4:
-                c7+=1
-            elif a==-4:
-                c8+=1
-        else:
-            if a==1:
-                c1+=1
-                count1=max(count1,c1)
-                c1=0
-            elif a==-1:
-                c2+=1
-                count2=max(count2,c2)
-                c2=0
-            elif a==2:
-                c3+=1
-                count3=max(count3,c3)
-                c3=0
-            elif a==-2:
-                c4+=1
-                count4=max(count4,c4)
-                c4=0
-            elif a==3:
-                c5+=1
-                count5=max(count5,c5)
-                c5=0
-            elif a==-3:
-                c6+=1
-                count6=max(count6,c6)
-                c6=0
-            elif a==4:
-                c7+=1
-                count7=max(count7,c7)
-                c7=0
-            elif a==-4:
-                c8+=1
-                count8=max(count8,c8)
-                c8=0
-
+    df["Longest subsequence length"]="" #creating the longest subsequence length column which stores count of longest subsequence
+    df["count"]=" " #creating count array which stores count of longest subsequence
+    count1=count2=count3=count4=count5=count6=count7=count8=0 #initializing longest subsequence length to zero
+    c1=c2=c3=c4=c5=c6=c7=c8=0 #secondary variable which count the longest subsequence count
+    #l_count represents the count of longest subsequence length
+    l_count1=l_count2=l_count3=l_count4=l_count5=l_count6=l_count7=l_count8=0 
+    try:
+        for i in range (len(df)-1):
+            curr_oct=df.loc[i,"Octant"] #storing current octant value
+            next_oct=df.loc[i+1,"Octant"] #storing next octant value
+            if curr_oct==next_oct:
+                if curr_oct==1:
+                    c1+=1
+                elif curr_oct==-1:
+                    c2+=1
+                elif curr_oct==2:
+                    c3+=1
+                elif curr_oct==-2:
+                    c4+=1
+                elif curr_oct==3:
+                    c5+=1
+                elif curr_oct==-3:
+                    c6+=1
+                elif curr_oct==4:
+                    c7+=1
+                elif curr_oct==-4:
+                    c8+=1
+            else:
+                if curr_oct==1:
+                    c1+=1
+                    if c1==count1:
+                        l_count1+=1
+                    elif c1>count1:
+                        l_count1=1
+                    count1=max(count1,c1)
+                    c1=0
+                elif curr_oct==-1:
+                    c2+=1
+                    if c2==count2:
+                        l_count2+=1
+                    elif c2>count2:
+                        l_count2=1
+                    count2=max(count2,c2)
+                    c2=0
+                elif curr_oct==2:
+                    c3+=1
+                    if c3==count3:
+                        l_count3+=1
+                    elif c3>count3:
+                        l_count3=1
+                    count3=max(count3,c3)
+                    c3=0
+                elif curr_oct==-2:
+                    c4+=1
+                    if c4==count4:
+                        l_count4+=1
+                    elif c4>count4:
+                        l_count4=1
+                    count4=max(count4,c4)
+                    c4=0
+                elif curr_oct==3:
+                    c5+=1
+                    if c5==count5:
+                        l_count5+=1
+                    elif c5>count5:
+                        l_count5=1
+                    count5=max(count5,c5)
+                    c5=0
+                elif curr_oct==-3:
+                    c6+=1
+                    if c6==count6:
+                        l_count6+=1
+                    elif c6>count6:
+                        l_count6=1
+                    count6=max(count6,c6)
+                    c6=0
+                elif curr_oct==4:
+                    c7+=1
+                    if c7==count7:
+                        l_count7+=1
+                    elif c7>count7:
+                        l_count7=1
+                    count7=max(count7,c7)
+                    c7=0
+                elif curr_oct==-4:
+                    c8+=1
+                    if c8==count8:
+                        l_count8+=1
+                    elif c8>count8:
+                        l_count8=1
+                    count8=max(count8,c8)
+                    c8=0
+    except:
+        print("there is error in the loop\n")
+    #locating the longest subsequence length of octant in its corresponding row
     df.loc[0,"Longest subsequence length"]=count1
     df.loc[1,"Longest subsequence length"]=count2
     df.loc[2,"Longest subsequence length"]=count3
@@ -165,7 +192,17 @@ def octant_longest_subsequence_count():
     df.loc[4,"Longest subsequence length"]=count5
     df.loc[5,"Longest subsequence length"]=count6
     df.loc[6,"Longest subsequence length"]=count7
-    df.loc[7,"Longest subsequence length"]=count8       
+    df.loc[7,"Longest subsequence length"]=count8  
+
+    #locating count of longest subsequence length in the data in its corresponding row
+    df.loc[0,"count"]= l_count1 
+    df.loc[1,"count"]= l_count2
+    df.loc[2,"count"]= l_count3
+    df.loc[3,"count"]= l_count4
+    df.loc[4,"count"]= l_count5
+    df.loc[5,"count"]= l_count6
+    df.loc[6,"count"]= l_count7
+    df.loc[7,"count"]= l_count8    
 
     df.to_excel('output_octant_transition_identify.xlsx',index=False) #printing output in excel file
 
