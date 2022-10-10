@@ -204,34 +204,40 @@ def octant_longest_subsequence_count():
     df.loc[6,"count"]= l_count7
     df.loc[7,"count"]= l_count8
     df[' ']='  '
-    df["Octant "]='  '  
-    df["Longest subsequence length "]='  '
-    df["Count "]='  '
+    df["Octant "]='  '  #creating another empty column
+    df["Longest subsequence length "]='  ' #creating another empty column
+    df["Count "]='  ' #creating another empty column 
 
-    index=0
+    index=0 #variable which hover on every octant
     row =0
-    for i in list:
-        count=0
-        df.loc[row,"Octant "]=i
-        df.loc[row,"Longest subsequence length "]=df.loc[index,"Longest subsequence length"]
-        df.loc[row,"Count "]=df.loc[index,"count"]
-        row+=1
-        df.loc[row,"Octant "]='Time'
-        df.loc[row,"Longest subsequence length "]='From'
-        df.loc[row,"Count "]='To'
-        row+=1
-        for j in range (len(df)):
-            if(df.loc[j,"Octant"]==i):
-                count+=1
-            else:
-                if(count==df.loc[index,"Longest subsequence length"]):
-                    df.loc[row,"Longest subsequence length "]=df.loc[j-df.loc[index,"Longest subsequence length"],"Time"]
-                    df.loc[row,"Count "]=df.loc[j-1,"Time"]
-                    row+=1
-                    count=0
+    try: 
+        for i in list: 
+            count=0 #initializing count of every octant from zero
+            df.loc[row,"Octant "]=i #locating octant in new octant column
+            df.loc[row,"Longest subsequence length "]=df.loc[index,"Longest subsequence length"] #printing Longest subsequence length in new Longest subsequence length column
+            df.loc[row,"Count "]=df.loc[index,"count"]
+            row+=1
+            df.loc[row,"Octant "]='Time'
+            df.loc[row,"Longest subsequence length "]='From'
+            df.loc[row,"Count "]='To'
+            row+=1
+            #loop which checks for each octant and its count
+            for j in range (len(df)):
+                if(df.loc[j,"Octant"]==i):
+                    count+=1
                 else:
-                    count=0
-        index+=1
+                    if(count==df.loc[index,"Longest subsequence length"]):
+                        #printing start time for octant
+                        df.loc[row,"Longest subsequence length "]=df.loc[j-df.loc[index,"Longest subsequence length"],"Time"]
+                        #printing end time for octant
+                        df.loc[row,"Count "]=df.loc[j-1,"Time"]
+                        row+=1
+                        count=0
+                    else:
+                        count=0
+            index+=1
+    except:
+        print("there is error in printing the range in code")
     df.to_excel('output_octant_longest_subsequence_with_range.xlsx',index=False) #printing output in excel file
 
 octant_longest_subsequence_count()
