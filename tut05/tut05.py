@@ -95,9 +95,15 @@ def octact_identification(mod=5000):
     df["-4"]=''
     df.loc[0,"-4"]=count8 #printing overall count of -4
     
+    
     array=[count1,count2,count3,count4,count5,count6,count7,count8,]
     array.sort(reverse=True)
     df[1]=df[-1]=df[2]=df[-2]=df[3]=df[-3]=df[4]=df[-4]=" "
+    df["Rank1 Octant ID"]=""
+    df["Rank1 Octant Name"]=""
+    octant_name={1:"Internal outward interaction",-1:"External outward interaction",2:"External Ejection",
+    -2:"Internal Ejection",3:"External inward interaction",-3:"Internal inward interaction",
+    4:"Internal sweep",-4:"External sweep"}
     # df.loc[0,1]="Rank 1"
     # df.loc[0,-1]="Rank 2"
     # df.loc[0,2]="Rank 3"
@@ -110,27 +116,52 @@ def octact_identification(mod=5000):
     for i in array:
         if(i==df.loc[0,"1"]):
             df.loc[0,1]=rank+1
+            if(rank==0):
+                df.loc[0,"Rank1 Octant ID"]=1
+                df.loc[0,"Rank1 Octant Name"]=octant_name[1]
         elif(i==df.loc[0,"-1"]):
             df.loc[0,-1]=rank+1
+            if(rank==0):
+                df.loc[0,"Rank1 Octant ID"]=-1
+                df.loc[0,"Rank1 Octant Name"]=octant_name[-1]
         elif(i==df.loc[0,"2"]):
             df.loc[0,2]=rank+1
+            if(rank==0):
+                df.loc[0,"Rank1 Octant ID"]=2
+                df.loc[0,"Rank1 Octant Name"]=octant_name[2]
         elif(i==df.loc[0,"-2"]):
             df.loc[0,-2]=rank+1
+            if(rank==0):
+                df.loc[0,"Rank1 Octant ID"]=-2
+                df.loc[0,"Rank1 Octant Name"]=octant_name[-2]
         elif(i==df.loc[0,"3"]):
             df.loc[0,3]=rank+1
+            if(rank==0):
+                df.loc[0,"Rank1 Octant ID"]=3
+                df.loc[0,"Rank1 Octant Name"]=octant_name[3]
         elif(i==df.loc[0,"-3"]):
             df.loc[0,-3]=rank+1
+            if(rank==0):
+                df.loc[0,"Rank1 Octant ID"]=-3
+                df.loc[0,"Rank1 Octant Name"]=octant_name[-3]
         elif(i==df.loc[0,"4"]):
             df.loc[0,4]=rank+1
+            if(rank==0):
+                df.loc[0,"Rank1 Octant ID"]=4
+                df.loc[0,"Rank1 Octant Name"]=octant_name[4]
         elif(i==df.loc[0,"-4"]):
             df.loc[0,-4]=rank+1
+            if(rank==0):
+                df.loc[0,"Rank1 Octant ID"]=-4
+                df.loc[0,"Rank1 Octant Name"]=octant_name[-4]
         rank+=1
         
 
 
     df.loc[1,"Octant ID"]="mod {}".format(mod) #printing mod value in 1st row of "Octant ID" column
     n=math.ceil(len(df)/mod) #calculating number of intervals
-    df["Rank1 Octant ID"]=""
+    
+    
     i=0
     while i<n:
         a=i*mod #lower value of interval
@@ -185,28 +216,44 @@ def octact_identification(mod=5000):
         for element in array:
             if(element==df.loc[i+2,"1"]):
                 df.loc[i+2,1]=rank+1
-                if(rank==0):df.loc[i+2,"Rank1 Octant ID"]=1
+                if(rank==0):
+                    df.loc[i+2,"Rank1 Octant ID"]=1
+                    df.loc[i+2,"Rank1 Octant Name"]=octant_name[1]
             elif(element==df.loc[i+2,"-1"]):
                 df.loc[i+2,-1]=rank+1
-                if(rank==0):df.loc[i+2,"Rank1 Octant ID"]=-1
+                if(rank==0):
+                    df.loc[i+2,"Rank1 Octant ID"]=-1
+                    df.loc[i+2,"Rank1 Octant Name"]=octant_name[-1]
             elif(element==df.loc[i+2,"2"]):
                 df.loc[i+2,2]=rank+1
-                if(rank==0):df.loc[i+2,"Rank1 Octant ID"]=2
+                if(rank==0):
+                    df.loc[i+2,"Rank1 Octant ID"]=2
+                    df.loc[i+2,"Rank1 Octant Name"]=octant_name[2]
             elif(element==df.loc[i+2,"-2"]):
                 df.loc[i+2,-2]=rank+1
-                if(rank==0):df.loc[i+2,"Rank1 Octant ID"]=-2
+                if(rank==0):
+                    df.loc[i+2,"Rank1 Octant ID"]=-2
+                    df.loc[i+2,"Rank1 Octant Name"]=octant_name[-2]
             elif(element==df.loc[i+2,"3"]):
                 df.loc[i+2,3]=rank+1
-                if(rank==0):df.loc[i+2,"Rank1 Octant ID"]=3
+                if(rank==0):
+                    df.loc[i+2,"Rank1 Octant ID"]=3
+                    df.loc[i+2,"Rank1 Octant Name"]=octant_name[3]
             elif(element==df.loc[i+2,"-3"]):
                 df.loc[i+2,-3]=rank+1
-                if(rank==0):df.loc[i+2,"Rank1 Octant ID"]=-3
+                if(rank==0):
+                    df.loc[i+2,"Rank1 Octant ID"]=-3
+                    df.loc[i+2,"Rank1 Octant Name"]=octant_name[-3]
             elif(element==df.loc[i+2,"4"]):
                 df.loc[i+2,4]=rank+1
-                if(rank==0):df.loc[i+2,"Rank1 Octant ID"]=4
+                if(rank==0):
+                    df.loc[i+2,"Rank1 Octant ID"]=4
+                    df.loc[i+2,"Rank1 Octant Name"]=octant_name[4]
             elif(element==df.loc[i+2,"-4"]):
                 df.loc[i+2,-4]=rank+1
-                if(rank==0):df.loc[i+2,"Rank1 Octant ID"]=-4
+                if(rank==0):
+                    df.loc[i+2,"Rank1 Octant ID"]=-4
+                    df.loc[i+2,"Rank1 Octant Name"]=octant_name[-4]
             rank+=1
 
         i+=1
