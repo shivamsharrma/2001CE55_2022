@@ -1,9 +1,11 @@
 
 import csv
+from datetime import datetime
+start_time = datetime.now()
 from sqlite3 import Time
 import pandas as pd #importing pandas
 import math #importing math
-def octact_identification(mod=5000):
+def octant_range_names(mod=5000):
    #code to read input csv file and store that in dataframe
     df=pd.read_excel('octant_input.xlsx') 
 
@@ -284,5 +286,8 @@ def octact_identification(mod=5000):
     -3:'Rank of -3',4:'Rank of 4',-4:'Rank of 4'},inplace=True)
     df.to_excel('octant_output_ranking_excel.xlsx',index=False)
     
-mod=5000
-octact_identification(mod)
+mod=5000 
+octant_range_names(mod)
+
+end_time = datetime.now()
+print('Duration of Program Execution: {}'.format(end_time - start_time))
