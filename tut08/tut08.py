@@ -72,6 +72,10 @@ def scorecard():
 			MyBowlers.at[row1,'WD']=MyBowlers.at[row1,'WD']+1
 			MyBowlers.at[row1,'R']=MyBowlers.at[row1,'R']+1
 
+		elif line[i][1]==' no run':
+			MyBowlers.at[row1,'B']=MyBowlers.at[row1,'B']+1
+			Batter.loc[row2,'B']=Batter.loc[row2,'B']+1
+
 		elif line[i][1]==' 2 wides':
 			wide=wide+2
 			score=score+2
@@ -87,6 +91,7 @@ def scorecard():
 		elif line[i][1]==' no ball':
 			NoBall=NoBall+1
 			score=score+1
+			
 			MyBowlers.loc[row1,'R']=MyBowlers.loc[row1,'R']+1
 			MyBowlers.loc[row1,'NB']=MyBowlers.loc[row1,'NB']+1
 		
@@ -166,20 +171,33 @@ def scorecard():
 			fall.append(add)
 
 			content=line[i][1].split('!')
-			if content[0]==' out Bowled':
-				Batter.loc[row2,'status']='b'+bowlername
+			if content[0]==' out lbw':
+				Batter.loc[row2,'status']='lbw b '+bowlername
 				MyBowlers.at[row1,'W']=MyBowlers.at[row1,'W']+1
 				wickets=wickets+1
-			elif content[0]==' run out':
-				Batter.loc[row2,'status']='run out'
-				wickets=wickets+1
-			else:
-				content2=content[0].split('by')
-				print(content[1])
-				Batter.loc[row2,'status']='c'+content2[0]+'b '+bowlername
-				MyBowlers.at[row1,'W']=MyBowlers.at[row1,'W']+1
-				wickets=wickets+1
-				
+			else:	
+				if content[0]==' out bowled':
+					Batter.loc[row2,'status']='b'+bowlername
+					MyBowlers.at[row1,'W']=MyBowlers.at[row1,'W']+1
+					wickets=wickets+1
+				elif content[0]==' run out':
+					Batter.loc[row2,'status']='run out'
+					wickets=wickets+1
+				else:
+					content2=content[0].split('by')
+					print(content2)
+					Batter.loc[row2,'status']='c'+content2[1]+'b '+bowlername
+					MyBowlers.at[row1,'W']=MyBowlers.at[row1,'W']+1
+					wickets=wickets+1
+
+	for i in range (len(Batter)):
+		
+		Batter.loc[i,'SR']=round((Batter.loc[i,'R']/Batter.loc[i,'B'])*100,2)	
+
+	for i in range (len(MyBowlers)):
+		MyBowlers.at[i,'O']=(MyBowlers.at[i,'B']/6)	
+		MyBowlers.at[i,'EC']=round(MyBowlers.at[i,'R']/MyBowlers.at[i,'O'],2)
+	del MyBowlers['B']
 	
 	print(MyBowlers)
 	print(Batter)
