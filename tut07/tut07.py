@@ -5,12 +5,13 @@ from datetime import datetime
 start_time = datetime.now()
 import math  # importing math
 from sqlite3 import Time
-
+import openpyxl
 import pandas as pd  # importing pandas
 
 
 def octant_analysis(mod=5000):
    #code to read input csv file and store that in dataframe
+    
     df=pd.read_excel('input\\1.0.xlsx') 
 
     #takingh mean of each 'U','V','W' column
@@ -550,6 +551,107 @@ def octant_analysis(mod=5000):
                         count=0
             index+=1
     df.to_excel('output.xlsx',index=False)
+
+    wb = openpyxl.load_workbook('output.xlsx')
+    sheet = wb.active
+    from openpyxl.styles import PatternFill,Border,Side
+    for rows in sheet.iter_rows(min_row=4, max_row=8, min_col=23, max_col=30):
+        yellow = "00FFFF00"
+        for cell in rows:
+            if cell.value==1:
+                cell.fill = PatternFill(start_color=yellow, end_color=yellow,fill_type = "solid")
+
+    a=Side(border_style='thin',color="00000000")
+    rownum=6
+    colnum=19
+    rowloc=2
+    colloc=13
+    border=Border(top=a,bottom=a,left=a,right=a)
+    for i in range (rowloc, rowloc+rownum):
+        for j in range (colloc,colnum+colloc) :
+            sheet.cell(row=i+1, column=j+1).border=border
+            if i==rowloc:
+                sheet. cell (row=i+1,column=j+1).border=border
+            if i==rowloc+rownum-1:
+                sheet.cell(row=i+1,column=j+1).border=border
+    rownum=9
+    colnum=3
+    rowloc=12
+    colloc=28
+    border=Border(top=a,bottom=a,left=a,right=a)
+    for i in range (rowloc, rowloc+rownum):
+        for j in range (colloc,colnum+colloc) :
+            sheet.cell(row=i+1, column=j+1).border=border
+            if i==rowloc:
+                sheet. cell (row=i+1,column=j+1).border=border
+            if i==rowloc+rownum-1:
+                sheet.cell(row=i+1,column=j+1).border=border
+
+    rownum=9
+    colnum=3
+    rowloc=2
+    colloc=44
+    border=Border(top=a,bottom=a,left=a,right=a)
+    for i in range (rowloc, rowloc+rownum):
+        for j in range (colloc,colnum+colloc) :
+            sheet.cell(row=i+1, column=j+1).border=border
+            if i==rowloc:
+                sheet. cell (row=i+1,column=j+1).border=border
+            if i==rowloc+rownum-1:
+                sheet.cell(row=i+1,column=j+1).border=border
+    # rownum=25+vary
+    rownum=25
+    colnum=3
+    rowloc=2
+    colloc=48
+    border=Border(top=a,bottom=a,left=a,right=a)
+    for i in range (rowloc, rowloc+rownum):
+        for j in range (colloc,colnum+colloc) :
+            sheet.cell(row=i+1, column=j+1).border=border
+            if i==rowloc:
+                sheet. cell (row=i+1,column=j+1).border=border
+            if i==rowloc+rownum-1:
+                sheet.cell(row=i+1,column=j+1).border=border
+
+    rownum=9
+    colnum=9
+    rowloc=2
+    colloc=34
+    dis=5
+    #vary
+    T=4+1
+    for k in range(T):
+        for i in range (rowloc, rowloc+rownum):
+            for j in range (colloc,colnum+colloc) :
+                sheet.cell(row=i+1, column=j+1).border=border
+                if i==rowloc:
+                    sheet. cell (row=i+1,column=j+1).border=border
+                if i==rowloc+rownum-1:
+                    sheet.cell(row=i+1,column=j+1).border=border
+        rowloc+=rownum+dis
+
+    rownum=8
+    colnum=8
+    rowloc=4
+    colloc=36
+    dis=6
+    #vary
+    T=4+1
+    l=[[],[],[],[],[],[],[],[]]
+    for k in range(T):
+        for i in range (rowloc, rowloc+rownum):
+            l=[[],[],[],[],[],[],[],[]]
+            x=0
+            for j in range (colloc,colnum+colloc) :
+                l[x].append(sheet.cell(row=i,column=j).value)
+                l[x].append(i)
+                l[x].append(j)
+                x+=1
+                a=max(l)
+            sheet.cell(row=a["1"],column=a["2"]).fill=PatternFill(start_color=yellow, end_color=yellow,fill_type = "solid")
+        rowloc+=rownum+dis
+
+    wb.save("color.xlsx")
     
 mod=5000 
 octant_analysis(mod)
