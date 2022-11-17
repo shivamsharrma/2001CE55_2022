@@ -5,7 +5,7 @@ import pandas as pd #importing pandas
 import sys
 from csv import writer
 
-#Help
+
 def scorecard():
 	pass
 
