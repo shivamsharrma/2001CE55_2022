@@ -1,7 +1,7 @@
 
 from datetime import datetime
 start_time = datetime.now()
-import pandas as pd
+import pandas as pd #importing pandas
 import sys
 from csv import writer
 
