@@ -178,7 +178,9 @@ def attendance_report():
         individual_df.to_excel(f"output/{individual_data['Roll'][0]}.xlsx", index=False) # Outputs the file in excel format for that particular roll no.
 
         
-    
+    consolidated_data = pandas.DataFrame(stud_info) # Converting consolidated report to dataframe
+    consolidated_data.to_excel('output/attendance_report_consolidated.xlsx', index=False) # Outputs the file in excel format
+
 from platform import python_version
 ver = python_version()
 
