@@ -5,7 +5,7 @@ import glob
 from io import BytesIO 
 import streamlit as st
 start_time = datetime.now()
-st.title("Gui version of tut 7")
+st.header("Gui version of tut 7")
 uploaded_file= st.file_uploader("Choose a file")
 #Help
 mod=int(st.number_input('Enter the mod value:'))
@@ -15,7 +15,7 @@ if uploaded_file is not None and mod!=0:
 
 		
 		dp=pd.read_excel(uploaded_file)
-	
+		
 		dp=dp.fillna(0) 
 		octant_name_id_mapping = {"1":"Internal outward interaction", "-1":"External outward interaction", "2":"External Ejection", "-2":"Internal Ejection", "3":"External inward interaction", "-3":"Internal inward interaction", "4":"Internal sweep", "-4":"External sweep"}
 		avg_u=dp['U'].mean() #finding avg of u using mean function
@@ -593,10 +593,12 @@ if uploaded_file is not None and mod!=0:
 
 			wb.save('output.xlsx')
 			st.dataframe(dp.head(10))
+			timestamp=pd.Timestamp(2020-10-10)
+			res=str(pd.datetime.now().date())+'-'+str(pd.datetime.now().hour)+'-'+str(pd.datetime.now().minute)+'-'+str(pd.datetime.now().second)
 			with open('output.xlsx',"rb") as f:
 				file=f.read()
 			
-			st.download_button(label='🔻Download excel',data=file,file_name="output.xlsx")
+			st.download_button(label='🔻Download excel',data=file,file_name=(uploaded_file.name)+'_'+ str(mod)+ '_'+ (res)+'.xlsx')
     
 	end_time = datetime.now()
 	print('Duration of Program Execution: {}'.format(end_time - start_time))
